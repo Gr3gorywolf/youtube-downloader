@@ -9,10 +9,8 @@ COPY . .
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./ytdlp-bin/yt-dlp
 RUN chmod 777 ./ytdlp-bin/yt-dlp
 COPY package*.json ./
-RUN npm install
+RUN yarm
 # Build the Next.js application
-RUN npm run build
-RUN yarn
 RUN npm run build
 # Expose the port the app runs on
 EXPOSE 3000
