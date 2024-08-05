@@ -15,8 +15,8 @@ export default function Home() {
     <section class="w-full h-screen to-gree flex flex-col items-center md:justify-center">
       <div className="container px-5 pt-8 md:pt-0 md:pb-0 max-w-screen-md">
         <div className="mb-10 text-center">
-          <h1 className="text-3xl md:text-4xl uppercase tracking-wide font-bold mb-1">
-            Youtube Video Downloader
+          <h1 className="text-3xl md:text-4xl uppercase tracking-wide font-bold mb-1 text-blue-500">
+            MediaBlade web
           </h1>
           <h2 className="text-base md:text-lg text-zinc-300">
             Just paste your link
@@ -36,9 +36,9 @@ export default function Home() {
           />
           <button
             type="submit"
-            className="py-4 px-6 bg-neutral-800 hover:bg-neutral-700 text-base text-neutral-50 font-medium tracking-wider transition-all rounded"
+            className="py-4 px-6 bg-blue-500 hover:bg-blue-600 text-base text-neutral-50 font-medium tracking-wider transition-all rounded"
           >
-            Download
+            Look for results
           </button>
         </form>
       </div>

@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    working_dir: /usr/app
+    tty: true
+    ports:
+      - "8777:3000"

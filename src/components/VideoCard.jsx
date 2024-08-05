@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -13,8 +13,15 @@ export default function VideoCard({ submittedVideo }) {
     `/api/videoInfo?video=${submittedVideo}`,
     fetcher,
   );
+  
   const [selectedOption, setSelectedOption] = useState();
 
+  const getUrl = () =>{
+    return `/api/download?url=${data.videoUrl}&formatId=${selectedOption}`
+  }
+  useEffect(()=>{
+      setSelectedOption(null);
+  },[data])
   if (error)
     return <h1 className="text-center mb-10">An error has occurred.</h1>;
   if (!data) return <h1 className="text-center mb-10">Loading...</h1>;
@@ -26,20 +33,6 @@ export default function VideoCard({ submittedVideo }) {
         Sorry, I couldn&apos;t find the video!
       </h1>
     );
-
-  const VerifiedBadge = () => {
-    return (
-      <div className="p-0 pl-1 mb-[1px] flex-none">
-        <Image
-          src="/verified-checkmark.svg"
-          alt="Verified"
-          width={14}
-          height={14}
-        />
-      </div>
-    );
-  };
-
   return (
     <div className="flex flex-col items-center justify-center mb-10">
       <div className="flex sm:flex-row flex-col gap-3 sm:max-w-2xl max-w-xs">
@@ -49,8 +42,8 @@ export default function VideoCard({ submittedVideo }) {
               {data.videoDuration}
             </div>
             <img
-              src={data.videoThumbnail.url}
-              className="rounded-2xl"
+              src={data.videoThumbnail}
+              className="rounded-2xl  h-20 w-auto"
               alt="thumbnail"
             />
           </Link>
@@ -72,18 +65,12 @@ export default function VideoCard({ submittedVideo }) {
           <div className="min-w-fit my-2">
             <Link
               target="_blank"
-              href={data.author.channel_url}
+              href={data.author.url}
               passHref
               className="flex items-center gap-2 text-xs text-[#AAAAAA]"
             >
-              <img
-                src={data.author.thumbnails[0].url}
-                alt="Channel Image"
-                className="w-6 rounded-full"
-              />
               <div className="flex">
-                <span className="hover:text-white">{data.author.name}</span>
-                {data.author.verified ? <VerifiedBadge /> : null}
+                <span className="hover:text-white">{data.name}</span>
               </div>
             </Link>
           </div>
@@ -120,16 +107,14 @@ export default function VideoCard({ submittedVideo }) {
               className="flex"
               href={
                 selectedOption
-                  ? data.formatsDetails.filter(
-                      (format) => format.itag == selectedOption,
-                    )[0].url
+                  ?getUrl()
                   : "#"
               }
               passHref
             >
               <button
                 disabled={selectedOption ? false : true}
-                className="disabled:cursor-not-allowed disabled:text-gray-300 px-5 ml-2 bg-[#272727] font-medium rounded-full text-sm text-center"
+                className="disabled:cursor-not-allowed disabled:text-gray-300 px-5 ml-2 bg-blue-500 font-medium rounded-full text-sm text-center"
               >
                 Download
               </button>

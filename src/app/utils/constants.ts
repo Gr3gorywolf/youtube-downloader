@@ -1,0 +1,1 @@
+export const YTDLPBinaryPath = './ytdlp-bin/yt-dlp';
