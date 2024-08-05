@@ -7,14 +7,14 @@ import { Roboto } from "next/font/google";
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
-  title: "YTDownloader",
-  author: "Jesús Alejandro (Jesus_ale43)",
-  description: "A simple online youtube video downloader using ytdl-core",
+  title: "MediaBlade web",
+  author: "Gregory Cabral",
+  description: "A simple online video downloader using ytdl-core",
   openGraph: {
     //url: "",
     type: "website",
-    title: "YTDownloader",
-    description: "A simple online youtube video downloader using ytdl-core",
+    title: "MediaBlade web",
+    description: "A simple online video downloader using ytdl-core",
     //images: [''],
   },
 };
