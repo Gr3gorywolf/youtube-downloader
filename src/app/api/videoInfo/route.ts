@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 const { execSync } = require('node:child_process');
 import { YTDlpOutput }  from '@/app/interfaces/YtdlpOutput';
 import { YTDLPBinaryPath } from "@/app/utils/constants";
+import { getCookiesPath } from "@/app/utils/ytdl-helpers";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -14,7 +15,8 @@ export async function GET(request) {
     );
 
   try { 
-    const output = await execSync(`${YTDLPBinaryPath} -j ${video}`).toString();
+    const cookies = getCookiesPath();
+    const output = await execSync(`${YTDLPBinaryPath} ${cookies ? `--cookies ${cookies}` : ''} -j ${video}`).toString();
     const videoDetails = JSON.parse(output) as YTDlpOutput;
     return NextResponse.json({
       videoId: videoDetails.id,

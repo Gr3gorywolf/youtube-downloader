@@ -1,11 +1,13 @@
 version: '3'
 
 services:
-  app:
+  app: 
+    volumes:
+      - ./ytdlp-bin:/ytdlp-bin
     build:
       context: .
       dockerfile: dockerfile
-    working_dir: /usr/app
     tty: true
+    command: "bash ./scripts/startup.sh"
     ports:
       - "8777:3000"

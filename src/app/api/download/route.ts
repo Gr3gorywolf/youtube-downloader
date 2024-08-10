@@ -6,6 +6,7 @@ import fs from 'fs';
 import { NextResponse } from 'next/server';
 import path from 'path';
 import { NextApiResponse } from 'next';
+import { getCookiesPath } from '@/app/utils/ytdl-helpers';
 
 export  async function GET(req ) {
   const res = NextResponse;
@@ -36,9 +37,11 @@ export  async function GET(req ) {
   // Temporary file path
   const fileName = crypto.createHash('sha256').update(videoUrl + formatId).digest('hex')
   const tempFilePath = path.join(process.cwd(), `${fileName}.${fileExtension}`);
-
+  const cookies = getCookiesPath();
   // Execute yt-dlp command to download the video with specified format
-  const ytdlp = spawn(YTDLPBinaryPath, ['-f', formatId, '-o', tempFilePath, videoUrl]);
+  const ytdlp = spawn(YTDLPBinaryPath, [
+    ...(cookies ? ['--cookies', cookies] : []),
+    '-f', formatId, '-o', tempFilePath, videoUrl]);
 
   return await new Promise((resolve, reject) => {
     ytdlp.on('error', (error) => {
