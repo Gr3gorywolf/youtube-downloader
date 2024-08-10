@@ -2,6 +2,7 @@
 FROM node:18.19.0
 # Set the working directory in the container
 WORKDIR /
+RUN chmod 1777 /tmp
 RUN usermod -G staff www-data
 # Install FFmpeg and other dependencies
 RUN apt-get update && apt-get install -y ffmpeg curl
